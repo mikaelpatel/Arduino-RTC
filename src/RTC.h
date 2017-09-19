@@ -43,7 +43,7 @@ public:
     if (now - m_millis < 1000) return (false);
     uint8_t sreg = SREG;
     __asm__ __volatile__("cli" ::: "memory");
-    while (now - m_millis < 1000) {
+    while (now - m_millis > 1000) {
       m_time += 1;
       m_millis += 1000;
     }
