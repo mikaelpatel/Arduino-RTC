@@ -1,7 +1,7 @@
 #include "RTC.h"
 
 // #define USE_DS1302
-// #define USE_DS1307
+#define USE_DS1307
 
 #if defined(USE_DS1302)
 #include "GPIO.h"
@@ -11,8 +11,10 @@ DS1302<BOARD::D11, BOARD::D12, BOARD::D13> rtc;
 #elif defined(USE_DS1307)
 #include "TWI.h"
 #include "Driver/DS1307.h"
-#include "Software/TWI.h"
-Software::TWI<BOARD::D6, BOARD::D7> twi;
+// #include "Software/TWI.h"
+// Software::TWI<BOARD::D6, BOARD::D7> twi;
+#include "Hardware/TWI.h"
+Hardware::TWI twi;
 DS1307 rtc(twi);
 
 #else
@@ -36,11 +38,15 @@ void loop()
   time_t time = 0;
   char buf[32];
 
-#if defined(USE_RTC)
-  rtc.tick();
+#if !defined(USE_RTC)
+  uint16_t start = millis();
+#else
+  if (!rtc.tick()) return;
 #endif
 
   rtc.get_time(now);
+  Serial.print(millis() / 1000);
+  Serial.print(':');
   Serial.print(time = mktime(&now));
   Serial.print(F(":wday="));
   Serial.print(now.tm_wday);
@@ -54,5 +60,7 @@ void loop()
   Serial.print(isotime_r(gmtime_r(&time, &now), buf));
   Serial.println('"');
 
-  delay(1000);
+#if !defined(USE_RTC)
+  delay(1000 - (millis() - start));
+#endif
 }
