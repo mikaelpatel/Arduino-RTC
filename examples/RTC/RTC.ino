@@ -38,9 +38,7 @@ void loop()
   time_t time = 0;
   char buf[32];
 
-#if !defined(USE_RTC)
-  uint16_t start = millis();
-#else
+#if defined(USE_RTC)
   if (!rtc.tick()) return;
 #endif
 
@@ -61,6 +59,6 @@ void loop()
   Serial.println('"');
 
 #if !defined(USE_RTC)
-  delay(1000 - (millis() - start));
+  delay(1000);
 #endif
 }
