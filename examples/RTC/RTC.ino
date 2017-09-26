@@ -1,5 +1,6 @@
 #include "RTC.h"
 
+// #define SET_TIME
 // #define USE_DS1302
 #define USE_DS1307
 
@@ -27,9 +28,11 @@ void setup()
   Serial.begin(57600);
   while (!Serial);
 
+#if defined(SET_TIME)
   set_zone(ONE_HOUR);
   struct tm now(SATURDAY, 2000, JANUARY, 1, 23, 59, 30);
   rtc.set_time(now);
+#endif
 }
 
 void loop()

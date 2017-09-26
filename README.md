@@ -19,5 +19,5 @@ Version: 1.0
 
 ## Dependencies
 
-* [General Purpose Input/Output library for Arduino, GPIO](https://github.com/mikaelpatel/Arduino-GPIO)
-* [Two-Wire Interface library for Arduino, TWI](https://github.com/mikaelpatel/Arduino-TWI)
+* [Arduino-GPIO](https://github.com/mikaelpatel/Arduino-GPIO)
+* [Arduino-TWI](https://github.com/mikaelpatel/Arduino-TWI)
