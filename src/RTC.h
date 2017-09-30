@@ -30,7 +30,10 @@ public:
   /**
    * Construct software real-time clock based on millis().
    */
-  RTC() : m_millis(0), m_time(0) {}
+  RTC() :
+    m_millis(0),
+    m_time(0)
+  {}
 
   /**
    * Increment seconds counter when time has elapsed.
@@ -42,10 +45,7 @@ public:
     if (now - m_millis < 1000) return (false);
     uint8_t sreg = SREG;
     __asm__ __volatile__("cli" ::: "memory");
-    while (now - m_millis >= 1000) {
-      m_time += 1;
-      m_millis += 1000;
-    }
+    m_time += 1;
     m_millis = now;
     SREG = sreg;
     __asm__ __volatile__("" ::: "memory");
