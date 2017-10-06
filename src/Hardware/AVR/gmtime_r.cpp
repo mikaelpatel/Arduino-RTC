@@ -26,9 +26,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <time.h>
+#include "time.h"
 #include <stdlib.h>
-#include <inttypes.h>
 
 struct tm*
 gmtime_r(const time_t * timer, struct tm * timeptr)

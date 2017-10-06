@@ -23,10 +23,9 @@ DS1302<BOARD::D11, BOARD::D12, BOARD::D13> rtc;
 Software::TWI<BOARD::D18, BOARD::D19> twi;
 #else
 // Configure: Hardware TWI bus clock frequency (100 or 400 kHz)
-#define FREQ 100000UL
-// #define FREQ 400000UL
 #include "Hardware/TWI.h"
-Hardware::TWI twi(FREQ);
+Hardware::TWI twi(100000UL);
+// Hardware::TWI twi(400000UL);
 #endif
 DS1307 rtc(twi);
 

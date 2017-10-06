@@ -26,40 +26,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <time.h>
+#include "time.h"
 
-extern void __print_lz(int , char *, char );
+int (*__dst_ptr) (const time_t*, int32_t*) = 0;
 
-char*
-isotime_r(const struct tm* tm, char* buffer)
+void
+set_dst(int (*d) (const time_t *, int32_t *))
 {
-  char* bp = buffer;
-  int i;
-
-  i = tm->tm_year + 1900;
-  __print_lz(i/100, bp, '-');
-  bp += 2;
-  __print_lz(i%100, bp,'-');
-  bp += 3;
-
-  i = tm->tm_mon + 1;
-  __print_lz(i, bp,'-');
-  bp += 3;
-
-  i = tm->tm_mday;
-  __print_lz(i, bp,' ');
-  bp += 3;
-
-  i = tm->tm_hour;
-  __print_lz(i, bp,':');
-  bp += 3;
-
-  i = tm->tm_min;
-  __print_lz(i, bp,':');
-  bp += 3;
-
-  i = tm->tm_sec;
-  __print_lz(i, bp,0);
-
-  return (buffer);
+  __dst_ptr = d;
 }

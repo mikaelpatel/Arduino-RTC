@@ -26,26 +26,40 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <time.h>
+#include "time.h"
 
-extern long __utc_offset;
+extern void __print_lz(int , char *, char );
 
-extern int (*__dst_ptr) (const time_t *, int32_t *);
-
-time_t
-mktime(struct tm * timeptr)
+char*
+isotime_r(const struct tm* tm, char* buffer)
 {
-  time_t ret;
+  char* bp = buffer;
+  int i;
 
-  ret = mk_gmtime(timeptr);
-  if (timeptr->tm_isdst < 0) {
-    if (__dst_ptr)
-      timeptr->tm_isdst = __dst_ptr(&ret, &__utc_offset);
-  }
-  if (timeptr->tm_isdst > 0)
-    ret -= timeptr->tm_isdst;
-  ret -= __utc_offset;
-  localtime_r(&ret, timeptr);
+  i = tm->tm_year + 1900;
+  __print_lz(i/100, bp, '-');
+  bp += 2;
+  __print_lz(i%100, bp,'-');
+  bp += 3;
 
-  return ret;
+  i = tm->tm_mon + 1;
+  __print_lz(i, bp,'-');
+  bp += 3;
+
+  i = tm->tm_mday;
+  __print_lz(i, bp,' ');
+  bp += 3;
+
+  i = tm->tm_hour;
+  __print_lz(i, bp,':');
+  bp += 3;
+
+  i = tm->tm_min;
+  __print_lz(i, bp,':');
+  bp += 3;
+
+  i = tm->tm_sec;
+  __print_lz(i, bp,0);
+
+  return (buffer);
 }

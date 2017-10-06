@@ -26,10 +26,18 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <time.h>
+#include "time.h"
 
-int32_t
-difftime(time_t t1, time_t t2)
+int32_t __utc_offset = 0L;
+
+void
+set_zone(int32_t z)
 {
-  return t1 - t2;
+  __utc_offset = z;
+}
+
+uint32_t
+get_zone()
+{
+  return (__utc_offset);
 }

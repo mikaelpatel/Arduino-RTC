@@ -20,8 +20,7 @@
 #define DS1302_H
 
 #include "GPIO.h"
-#include "bcd.h"
-#include "time.h"
+#include "RTC.h"
 
 #ifndef CHARBITS
 #define CHARBITS 8

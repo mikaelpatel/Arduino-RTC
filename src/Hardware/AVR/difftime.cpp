@@ -26,23 +26,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <time.h>
+#include "time.h"
 
-extern long __utc_offset;
-extern int (*__dst_ptr) (const time_t *, int32_t *);
-
-struct tm*
-localtime_r(const time_t* timer, struct tm* timeptr)
+int32_t
+difftime(time_t t1, time_t t2)
 {
-  int16_t dst;
-  time_t lt;
-
-  dst = -1;
-  if (__dst_ptr) dst = __dst_ptr(timer, &__utc_offset);
-  lt = *timer + __utc_offset;
-  if (dst > 0) lt += dst;
-  gmtime_r(&lt, timeptr);
-  timeptr->tm_isdst = dst;
-
-  return (timeptr);
+  return t1 - t2;
 }

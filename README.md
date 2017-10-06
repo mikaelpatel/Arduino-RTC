@@ -4,7 +4,7 @@ The RTC library has been developed to allow a common interface for RTC
 devices. The library includes a software based RTC, and device drivers
 for DS1302 and DS1307 Real-Time Clock devices.
 
-Version: 1.0
+Version: 1.1
 
 ## Classes
 

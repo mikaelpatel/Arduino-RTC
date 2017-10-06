@@ -26,13 +26,25 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <inttypes.h>
-#include <time.h>
+#include "time.h"
 
-int (*__dst_ptr) (const time_t*, int32_t*) = 0;
+extern int32_t __utc_offset;
+extern int (*__dst_ptr) (const time_t *, int32_t*);
 
-void
-set_dst(int (*d) (const time_t *, int32_t *))
+time_t
+mktime(struct tm * timeptr)
 {
-  __dst_ptr = d;
+  time_t ret;
+
+  ret = mk_gmtime(timeptr);
+  if (timeptr->tm_isdst < 0) {
+    if (__dst_ptr)
+      timeptr->tm_isdst = __dst_ptr(&ret, &__utc_offset);
+  }
+  if (timeptr->tm_isdst > 0)
+    ret -= timeptr->tm_isdst;
+  ret -= __utc_offset;
+  localtime_r(&ret, timeptr);
+
+  return ret;
 }

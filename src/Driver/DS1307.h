@@ -19,8 +19,7 @@
 #ifndef DS1307_H
 #define DS1307_H
 
-#include "bcd.h"
-#include "time.h"
+#include "RTC.h"
 #include "TWI.h"
 
 /**

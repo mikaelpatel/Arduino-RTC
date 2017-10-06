@@ -51,8 +51,7 @@
 #ifndef EU_DST_H
 #define EU_DST_H
 
-#include <time.h>
-#include <inttypes.h>
+#include "time.h"
 
 int eu_dst(const time_t* timer, int32_t* z)
 {

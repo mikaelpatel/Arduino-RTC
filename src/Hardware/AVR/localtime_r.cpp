@@ -26,16 +26,23 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-long __utc_offset = 0L;
+#include "time.h"
 
-void
-set_zone(long z)
-{
-  __utc_offset = z;
-}
+extern int32_t __utc_offset;
+extern int (*__dst_ptr) (const time_t *, int32_t *);
 
-long
-get_zone()
+struct tm*
+localtime_r(const time_t* timer, struct tm* timeptr)
 {
-  return (__utc_offset);
+  int16_t dst;
+  time_t lt;
+
+  dst = -1;
+  if (__dst_ptr) dst = __dst_ptr(timer, &__utc_offset);
+  lt = *timer + __utc_offset;
+  if (dst > 0) lt += dst;
+  gmtime_r(&lt, timeptr);
+  timeptr->tm_isdst = dst;
+
+  return (timeptr);
 }

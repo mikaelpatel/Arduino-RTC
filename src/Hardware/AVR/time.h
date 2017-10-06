@@ -1,5 +1,5 @@
 /**
- * @file time.h
+ * @file Hardware/AVR/time.h
  * @version 1.0
  *
  * @section License
@@ -16,10 +16,10 @@
  * Lesser General Public License for more details.
  */
 
-#ifndef TIME_H
-#define TIME_H
+#ifndef HARDWARE_AVR_TIME_H
+#define HARDWARE_AVR_TIME_H
 
-#include <inttypes.h>
+#include <stdint.h>
 #include <string.h>
 
 /**
@@ -178,5 +178,4 @@ void set_dst(int (*)(const time_t*, int32_t*));
  */
 void set_zone(int32_t);
 uint32_t get_zone();
-
 #endif
