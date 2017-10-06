@@ -36,7 +36,7 @@ set_zone(int32_t z)
   __utc_offset = z;
 }
 
-uint32_t
+int32_t
 get_zone()
 {
   return (__utc_offset);

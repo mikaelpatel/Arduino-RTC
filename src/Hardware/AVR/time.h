@@ -177,5 +177,5 @@ void set_dst(int (*)(const time_t*, int32_t*));
  * If the time zone is not set, the time system will operate in UTC only.
  */
 void set_zone(int32_t);
-uint32_t get_zone();
+int32_t get_zone();
 #endif
