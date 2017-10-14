@@ -66,11 +66,7 @@ enum {
  * The isotime function constructs an ascii string in the form
  * \code YYYY-MM-DD hh:mm:ss\endcode
  */
-char* isotime_r(const struct tm* tm, char* buf)
-{
-  strftime (buf, 32, "%F %T", tm);
-  return (buf);
-}
+#define isotime_r(tm,buf) (strftime (buf, 32, "%F %T", tm), buf)
 
 /**
  * Set the 'time zone'. The parameter is given in seconds East of the
@@ -79,16 +75,8 @@ char* isotime_r(const struct tm* tm, char* buf)
  *
  * If the time zone is not set, the time system will operate in UTC only.
  */
-void set_zone(int32_t z)
-{
-  _timezone = z;
-}
-
-int32_t get_zone()
-{
-  return (_timezone);
-}
-
+#define set_zone(x) _timezone = x
+#define get_zone() _timezone
 
 /**
  * Software Real-Time Clock.
@@ -158,5 +146,4 @@ protected:
   /** Current time from epoch. */
   volatile time_t m_time;
 };
-
 #endif
